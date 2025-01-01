@@ -26,6 +26,10 @@ const contactSchema = new mongoose.Schema({
 
 const Contact = mongoose.model("Contact", contactSchema);
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the Portfolio Backend API!");
+});
+
 // Create the route to save the contact form data
 app.post("/api/contact", async (req, res) => {
   const { name, email, description } = req.body;
