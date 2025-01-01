@@ -2,7 +2,6 @@ require("dotenv").config(); // Load environment variables from .env file
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 
 // Initialize the app
 const app = express();
@@ -10,7 +9,7 @@ const port = process.env.PORT || 4000; // Use environment variable for port
 
 // Use middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json()); // Use native JSON parser
 
 // MongoDB connection using DB_URL from .env
 mongoose
@@ -42,7 +41,9 @@ app.post("/api/contact", async (req, res) => {
     res.json({ success: true, message: "Form submitted successfully!" });
   } catch (err) {
     console.error(err);
-    res.json({ success: false, message: "Error saving form data!" });
+    res
+      .status(500)
+      .json({ success: false, message: "Error saving form data!" });
   }
 });
 
@@ -53,7 +54,9 @@ app.get("/api/admin/messages", async (req, res) => {
     res.json({ success: true, data: messages });
   } catch (err) {
     console.error(err);
-    res.json({ success: false, message: "Error fetching messages!" });
+    res
+      .status(500)
+      .json({ success: false, message: "Error fetching messages!" });
   }
 });
 
