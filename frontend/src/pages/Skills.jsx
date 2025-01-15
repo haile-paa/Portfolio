@@ -1,88 +1,114 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaReact } from "react-icons/fa"; // React icon
 import { SiMongodb } from "react-icons/si"; // MongoDB icon
 import { FaServer } from "react-icons/fa"; // Server/Backend icon
+import { motion } from "framer-motion";
 
 const Skills = () => {
+  const [clickedSkill, setClickedSkill] = useState(null); // Track clicked skill
+
+  // Animation variants
+  const slideIn = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0 },
+  };
+
+  const cardRotate = {
+    whileHover: {
+      rotate: 5,
+      transition: { type: "spring", stiffness: 200, damping: 10 },
+    },
+    whileTap: {
+      rotate: 5, // Apply rotation when clicked (on mobile)
+      transition: { type: "spring", stiffness: 200, damping: 10 },
+    },
+  };
+
+  // Handle click to toggle the clicked state for mobile
+  const handleCardClick = (skill) => {
+    if (clickedSkill === skill) {
+      setClickedSkill(null); // Deselect if the same card is clicked again
+    } else {
+      setClickedSkill(skill);
+    }
+  };
+
   return (
-    <div className='p-8 prose dark:prose-invert text-gray-800'>
-      <h1 className='text-xl font-bold text-blue-600'>MY Skills :</h1>
+    <motion.div
+      className='p-8 text-gray-800'
+      initial='hidden'
+      animate='visible'
+      variants={slideIn}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      {/* Title */}
+      <motion.h1
+        className='text-xl font-bold text-blue-600'
+        variants={slideIn}
+        transition={{ duration: 0.6 }}
+      >
+        Skills
+      </motion.h1>
 
-      <div className='flex flex-col items-center justify-center p-4'>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-8 mt-8'>
-          {/* Frontend Developer */}
-          <div className='bg-white p-6 rounded-lg shadow-lg'>
-            <div className='flex items-center justify-center mb-4'>
-              <FaReact className='text-blue-500 h-16 w-16' /> {/* React Icon */}
-            </div>
-            <h2 className='text-xl font-bold text-blue-600'>
-              Frontend Developer
-            </h2>
-            <p>
-              Passionate about building interactive and user-friendly web
-              applications using **React.js**, **Tailwind CSS**, and **Chakra
-              UI**. I prioritize a seamless user experience, combining **CSS3**
-              and **Toast Notifications** to enhance the UI and make it visually
-              appealing and intuitive.
-            </p>
-            <h3 className='mt-4 font-semibold'>Key Frontend Skills:</h3>
-            <ul>
-              <li>Building responsive layouts with Tailwind CSS</li>
-              <li>Creating interactive UIs using React.js</li>
-              <li>UI components with Chakra UI</li>
-              <li>Responsive design using CSS3</li>
-              <li>Notification systems with Toast notifications</li>
-            </ul>
+      {/* Skill Cards */}
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-8 mt-8'>
+        {/* Frontend Developer */}
+        <motion.div
+          className={`bg-white p-6 rounded-lg shadow-lg ${
+            clickedSkill === "frontend" ? "transform rotate-5" : ""
+          }`}
+          variants={slideIn}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          whileHover={cardRotate.whileHover}
+          whileTap={cardRotate.whileTap} // Apply rotation on click (tap)
+          onClick={() => handleCardClick("frontend")} // Click handler
+        >
+          <div className='flex items-center justify-center mb-4'>
+            <FaReact className='text-blue-500 h-16 w-16' />
           </div>
+          <h2 className='text-lg font-bold text-blue-600'>Frontend</h2>
+          <p className='text-sm text-gray-600 mt-2'>React.js, Tailwind CSS</p>
+        </motion.div>
 
-          {/* Backend Developer */}
-          <div className='bg-white p-6 rounded-lg shadow-lg'>
-            <div className='flex items-center justify-center mb-4'>
-              <FaServer className='text-gray-600 h-16 w-16' />{" "}
-              {/* Server/Backend Icon */}
-            </div>
-            <h2 className='text-xl font-bold text-blue-600'>
-              Backend Developer
-            </h2>
-            <p>
-              I specialize in building scalable and secure backends with
-              **Node.js** and **Express.js**. Additionally, I have experience in
-              **Go** for high-performance applications. With **MongoDB**, I
-              manage databases efficiently and create APIs that interact
-              seamlessly with the frontend.
-            </p>
-            <h3 className='mt-4 font-semibold'>Key Backend Skills:</h3>
-            <ul>
-              <li>API development with Node.js and Express.js</li>
-              <li>Building high-performance services with Go</li>
-              <li>Database management with MongoDB</li>
-              <li>Authentication and authorization (JWT, OAuth)</li>
-              <li>Integrating frontend with backend through RESTful APIs</li>
-            </ul>
+        {/* Backend Developer */}
+        <motion.div
+          className={`bg-white p-6 rounded-lg shadow-lg ${
+            clickedSkill === "backend" ? "transform rotate-5" : ""
+          }`}
+          variants={slideIn}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          whileHover={cardRotate.whileHover}
+          whileTap={cardRotate.whileTap} // Apply rotation on click (tap)
+          onClick={() => handleCardClick("backend")} // Click handler
+        >
+          <div className='flex items-center justify-center mb-4'>
+            <FaServer className='text-gray-600 h-16 w-16' />
           </div>
+          <h2 className='text-lg font-bold text-blue-600'>Backend</h2>
+          <p className='text-sm text-gray-600 mt-2'>
+            Node.js, Express.js, Golang
+          </p>
+        </motion.div>
 
-          {/* Database */}
-          <div className='bg-white p-6 rounded-lg shadow-lg'>
-            <div className='flex items-center justify-center mb-4'>
-              <SiMongodb className='text-green-500 h-16 w-16' />{" "}
-              {/* MongoDB Icon */}
-            </div>
-            <h2 className='text-xl font-bold text-blue-600'>Database</h2>
-            <p>
-              Experienced in managing and querying **MongoDB** for NoSQL-based
-              applications, ensuring fast, flexible, and scalable data storage
-              solutions.
-            </p>
-            <h3 className='mt-4 font-semibold'>Database Skills:</h3>
-            <ul>
-              <li>Data modeling and schema design with MongoDB</li>
-              <li>Efficient querying and indexing for performance</li>
-              <li>Building and managing NoSQL databases for scalability</li>
-            </ul>
+        {/* Database */}
+        <motion.div
+          className={`bg-white p-6 rounded-lg shadow-lg ${
+            clickedSkill === "database" ? "transform rotate-5" : ""
+          }`}
+          variants={slideIn}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          whileHover={cardRotate.whileHover}
+          whileTap={cardRotate.whileTap} // Apply rotation on click (tap)
+          onClick={() => handleCardClick("database")} // Click handler
+        >
+          <div className='flex items-center justify-center mb-4'>
+            <SiMongodb className='text-green-500 h-16 w-16' />
           </div>
-        </div>
+          <h2 className='text-lg font-bold text-blue-600'>Database</h2>
+          <p className='text-sm text-gray-600 mt-2'>MongoDB</p>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

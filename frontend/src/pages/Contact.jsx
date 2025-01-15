@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { motion } from "framer-motion"; // Import framer-motion
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -50,9 +51,27 @@ const Contact = () => {
 
   return (
     <div className='container mx-auto p-8'>
-      <h2 className='text-3xl font-bold text-center mb-4'>Contact Form</h2>
-      <form onSubmit={handleSubmit} className='max-w-md mx-auto'>
-        <div className='mb-4'>
+      <motion.h2
+        className='text-3xl font-bold text-center mb-4'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        Contact Form
+      </motion.h2>
+      <motion.form
+        onSubmit={handleSubmit}
+        className='max-w-md mx-auto'
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <motion.div
+          className='mb-4'
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 1 }}
+        >
           <label className='block text-lg font-medium mb-2'>Name</label>
           <input
             type='text'
@@ -61,9 +80,14 @@ const Contact = () => {
             className='w-full p-3 border border-gray-300 rounded-md'
             required
           />
-        </div>
+        </motion.div>
 
-        <div className='mb-4'>
+        <motion.div
+          className='mb-4'
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 1 }}
+        >
           <label className='block text-lg font-medium mb-2'>Email</label>
           <input
             type='email'
@@ -72,9 +96,14 @@ const Contact = () => {
             className='w-full p-3 border border-gray-300 rounded-md'
             required
           />
-        </div>
+        </motion.div>
 
-        <div className='mb-4'>
+        <motion.div
+          className='mb-4'
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 1 }}
+        >
           <label className='block text-lg font-medium mb-2'>Description</label>
           <textarea
             value={description}
@@ -83,17 +112,22 @@ const Contact = () => {
             rows='5'
             required
           />
-        </div>
+        </motion.div>
 
-        <div className='text-center'>
+        <motion.div
+          className='text-center'
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 1 }}
+        >
           <button
             type='submit'
             className='bg-purple-500 text-white px-6 py-3 rounded-md hover:bg-purple-600'
           >
             Submit
           </button>
-        </div>
-      </form>
+        </motion.div>
+      </motion.form>
       <Toaster />
     </div>
   );

@@ -1,7 +1,9 @@
 import React from "react";
+import { motion } from "framer-motion";
 import jersey from "../assets/jersey-shop.png";
 import pa_ai from "../assets/pa-ai.png";
-import { FaServer } from "react-icons/fa"; // Importing the server icon
+import { FaServer, FaGithub } from "react-icons/fa"; // Importing the server and GitHub icons
+import { SiGo } from "react-icons/si"; // Import the Go icon
 
 const projects = [
   {
@@ -13,7 +15,7 @@ const projects = [
   {
     id: 2,
     title: "Go Ecommerce Backend",
-    img: <FaServer className='w-full h-full text-blue-600' />, // Using the icon as an image
+    img: <SiGo className='w-12 h-12 text-blue-600' />, // Use Go icon for "Go" projects
     link: "https://github.com/haile-paa/ecommerce-backend",
   },
   {
@@ -25,8 +27,20 @@ const projects = [
 ];
 
 const Projects = () => {
+  // Animation variants for fading in and sliding up
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <section className='px-8 py-16 bg-gray-50'>
+    <motion.section
+      className='px-8 py-16 bg-gray-50'
+      variants={fadeIn}
+      initial='hidden'
+      animate='visible'
+      transition={{ duration: 1, ease: "easeOut" }}
+    >
       <div className='text-center mb-12'>
         <h2 className='text-3xl font-bold text-gray-900'>My Recent Work</h2>
         <p className='text-gray-600 mt-4'>
@@ -40,7 +54,12 @@ const Projects = () => {
         </p>
       </div>
 
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
+      <motion.div
+        className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut", delay: 0.6 }}
+      >
         {projects.map((project) => (
           <div
             key={project.id}
@@ -54,7 +73,7 @@ const Projects = () => {
               }`}
             >
               {project.id === 2 ? (
-                project.img // Render the icon directly
+                project.img // Render the Go icon if the project contains "Go"
               ) : (
                 <img
                   src={project.img}
@@ -63,6 +82,7 @@ const Projects = () => {
                 />
               )}
             </div>
+
             <a
               href={project.link}
               target='_blank'
@@ -70,9 +90,17 @@ const Projects = () => {
               className='absolute inset-0 bg-black bg-opacity-60 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500'
             >
               <span className='text-white text-lg font-semibold'>
-                {project.id === 2 ? "Visit Code" : "Visit Site"}
+                {project.id === 2 ? (
+                  <div className='flex items-center space-x-2'>
+                    <FaGithub className='text-white' />
+                    <span>Visit Code</span>
+                  </div>
+                ) : (
+                  "Visit Site"
+                )}
               </span>
             </a>
+
             <div className='p-4'>
               <h3 className='text-lg font-semibold text-gray-800'>
                 {project.title}
@@ -80,8 +108,8 @@ const Projects = () => {
             </div>
           </div>
         ))}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };
 
