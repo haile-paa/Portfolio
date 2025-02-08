@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import crypto from "../assets/cryptoPlace.png";
+import cryptoplace from "../assets/cryptoPlace.png";
 import jersey from "../assets/jersey-shop.png";
 import pa_ai from "../assets/pa-ai.png";
 import { FaServer, FaGithub } from "react-icons/fa"; // Importing the server and GitHub icons
@@ -13,17 +13,18 @@ const projects = [
     img: jersey,
     link: "https://pa-jersey-shop.vercel.app",
   },
+
   {
     id: 2,
-    title: "Crypto Parket Place",
-    img: crypto,
-    link: "https://pa-crypto.vercel.app",
-  },
-  {
-    id: 3,
     title: "Go Ecommerce Backend",
     img: <SiGo className='w-12 h-12 text-blue-600' />, // Use Go icon for "Go" projects
     link: "https://github.com/haile-paa/ecommerce-backend",
+  },
+  {
+    id: 3,
+    title: "Crypto Parket Place",
+    img: cryptoplace,
+    link: "https://pa-crypto.vercel.app",
   },
   {
     id: 4,
