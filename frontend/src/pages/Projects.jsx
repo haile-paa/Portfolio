@@ -13,19 +13,20 @@ const projects = [
     img: jersey,
     link: "https://pa-jersey-shop.vercel.app",
   },
-
   {
     id: 2,
-    title: "Go Ecommerce Backend",
-    img: <SiGo className='w-12 h-12 text-blue-600' />, // Use Go icon for "Go" projects
-    link: "https://github.com/haile-paa/ecommerce-backend",
-  },
-  {
-    id: 3,
     title: "Crypto Parket Place",
     img: cryptoplace,
     link: "https://pa-crypto.vercel.app",
   },
+
+  {
+    id: 3,
+    title: "Go Ecommerce Backend",
+    img: <SiGo className='w-12 h-12 text-blue-600' />, // Use Go icon for "Go" projects
+    link: "https://github.com/haile-paa/ecommerce-backend",
+  },
+
   {
     id: 4,
     title: "AI Article Summarizer",
@@ -75,12 +76,12 @@ const Projects = () => {
           >
             <div
               className={`w-full h-48 ${
-                project.id === 2
+                project.id === 3
                   ? "flex justify-center items-center bg-gray-200"
                   : ""
               }`}
             >
-              {project.id === 2 ? (
+              {project.id === 3 ? (
                 project.img // Render the Go icon if the project contains "Go"
               ) : (
                 <img
@@ -98,7 +99,7 @@ const Projects = () => {
               className='absolute inset-0 bg-black bg-opacity-60 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500'
             >
               <span className='text-white text-lg font-semibold'>
-                {project.id === 2 ? (
+                {project.id === 3 ? (
                   <div className='flex items-center space-x-2'>
                     <FaGithub className='text-white' />
                     <span>Visit Code</span>
