@@ -1,9 +1,12 @@
 import React from "react";
-import { AiOutlineMail } from "react-icons/ai"; // Gmail icon
-import { FaLinkedin } from "react-icons/fa"; // LinkedIn icon
+import { AiOutlineMail } from "react-icons/ai";
+import { FaLinkedin } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useTheme } from "../App"; // Import the useTheme hook
 
 const Socials = () => {
+  const { isDarkMode } = useTheme(); // Get the current theme
+
   const iconHover = {
     whileHover: { scale: 1.2, rotate: 10, transition: { duration: 0.3 } },
   };
@@ -15,7 +18,9 @@ const Socials = () => {
 
   return (
     <motion.footer
-      className='bg-gray-800 py-6 text-white'
+      className={`py-6 ${
+        isDarkMode ? "bg-gray-800" : "bg-gray-800"
+      } text-white transition-colors duration-300`}
       initial='hidden'
       animate='visible'
       variants={fadeIn}

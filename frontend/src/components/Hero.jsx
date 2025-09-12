@@ -4,8 +4,11 @@ import About from "../pages/About";
 import Projects from "../pages/Projects";
 import Skills from "../pages/Skills";
 import { assets } from "../assets/assets";
+import { useTheme } from "../App"; // Import the useTheme hook
 
 const Hero = () => {
+  const { isDarkMode } = useTheme(); // Get the current theme
+
   // Animation variants
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -13,10 +16,16 @@ const Hero = () => {
   };
 
   return (
-    <div className='text-center py-16 bg-gray-50'>
+    <div
+      className={`text-center py-16 ${
+        isDarkMode ? "bg-gray-900" : "bg-gray-50"
+      } transition-colors duration-300`}
+    >
       {/* Title */}
       <motion.h1
-        className='text-4xl font-bold text-gray-800'
+        className={`text-4xl font-bold ${
+          isDarkMode ? "text-white" : "text-gray-800"
+        } transition-colors duration-300`}
         variants={fadeIn}
         initial='hidden'
         animate='visible'
@@ -27,7 +36,9 @@ const Hero = () => {
 
       {/* Subtitle */}
       <motion.p
-        className='text-gray-600 text-lg mt-4'
+        className={`text-lg mt-4 ${
+          isDarkMode ? "text-gray-300" : "text-gray-600"
+        } transition-colors duration-300`}
         variants={fadeIn}
         initial='hidden'
         animate='visible'

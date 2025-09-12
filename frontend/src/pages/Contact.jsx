@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import { motion } from "framer-motion"; // Import framer-motion
+import { motion } from "framer-motion";
+import { useTheme } from "../App"; // Import the useTheme hook
 
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
+  const { isDarkMode } = useTheme(); // Get the current theme
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,14 +31,13 @@ const Contact = () => {
       const data = await response.json();
       if (data.success) {
         toast.success("Form submitted successfully!", {
-          duration: 3000, // Show toast for 3 seconds
+          duration: 3000,
           position: "top-center",
         });
 
-        // Navigate to home after the toast shows
         setTimeout(() => {
-          navigate("/"); // Redirect to homepage
-        }, 3000); // Match the duration of the toast
+          navigate("/");
+        }, 3000);
       } else {
         toast.error("Something went wrong, please try again.", {
           position: "top-center",
@@ -50,9 +51,15 @@ const Contact = () => {
   };
 
   return (
-    <div className='container mx-auto p-8'>
+    <div
+      className={`container mx-auto p-8 ${
+        isDarkMode ? "bg-gray-900 min-h-screen" : "bg-gray-50 min-h-screen"
+      } transition-colors duration-300`}
+    >
       <motion.h2
-        className='text-3xl font-bold text-center mb-4'
+        className={`text-3xl font-bold text-center mb-4 ${
+          isDarkMode ? "text-white" : "text-gray-800"
+        } transition-colors duration-300`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
@@ -72,12 +79,22 @@ const Contact = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 1 }}
         >
-          <label className='block text-lg font-medium mb-2'>Name</label>
+          <label
+            className={`block text-lg font-medium mb-2 ${
+              isDarkMode ? "text-white" : "text-gray-800"
+            } transition-colors duration-300`}
+          >
+            Name
+          </label>
           <input
             type='text'
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className='w-full p-3 border border-gray-300 rounded-md'
+            className={`w-full p-3 border rounded-md ${
+              isDarkMode
+                ? "bg-gray-800 border-gray-700 text-white"
+                : "bg-white border-gray-300 text-gray-800"
+            } transition-colors duration-300`}
             required
           />
         </motion.div>
@@ -88,12 +105,22 @@ const Contact = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 1 }}
         >
-          <label className='block text-lg font-medium mb-2'>Email</label>
+          <label
+            className={`block text-lg font-medium mb-2 ${
+              isDarkMode ? "text-white" : "text-gray-800"
+            } transition-colors duration-300`}
+          >
+            Email
+          </label>
           <input
             type='email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className='w-full p-3 border border-gray-300 rounded-md'
+            className={`w-full p-3 border rounded-md ${
+              isDarkMode
+                ? "bg-gray-800 border-gray-700 text-white"
+                : "bg-white border-gray-300 text-gray-800"
+            } transition-colors duration-300`}
             required
           />
         </motion.div>
@@ -104,11 +131,21 @@ const Contact = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 1 }}
         >
-          <label className='block text-lg font-medium mb-2'>Description</label>
+          <label
+            className={`block text-lg font-medium mb-2 ${
+              isDarkMode ? "text-white" : "text-gray-800"
+            } transition-colors duration-300`}
+          >
+            Description
+          </label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className='w-full p-3 border border-gray-300 rounded-md'
+            className={`w-full p-3 border rounded-md ${
+              isDarkMode
+                ? "bg-gray-800 border-gray-700 text-white"
+                : "bg-white border-gray-300 text-gray-800"
+            } transition-colors duration-300`}
             rows='5'
             required
           />
@@ -122,7 +159,7 @@ const Contact = () => {
         >
           <button
             type='submit'
-            className='bg-purple-500 text-white px-6 py-3 rounded-md hover:bg-purple-600'
+            className='bg-purple-500 text-white px-6 py-3 rounded-md hover:bg-purple-600 transition-colors'
           >
             Submit
           </button>
