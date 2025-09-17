@@ -1,18 +1,23 @@
 import React, { useState } from "react";
-import { FaReact } from "react-icons/fa";
-import { SiMongodb } from "react-icons/si";
+import { FaReact, FaMobile } from "react-icons/fa";
+import { SiMongodb, SiExpo } from "react-icons/si";
 import { FaServer } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useTheme } from "../App"; // Import the useTheme hook
+import { useTheme } from "../App";
 
 const Skills = () => {
   const [clickedSkill, setClickedSkill] = useState(null);
-  const { isDarkMode } = useTheme(); // Get the current theme
+  const { isDarkMode } = useTheme();
 
   // Animation variants
   const slideIn = {
     hidden: { opacity: 0, x: -50 },
     visible: { opacity: 1, x: 0 },
+  };
+
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
   };
 
   const cardRotate = {
@@ -35,6 +40,61 @@ const Skills = () => {
     }
   };
 
+  // Function to get color class based on index and theme
+  const getColorClass = (index, isDarkMode) => {
+    if (isDarkMode) {
+      return `${
+        index % 6 === 0
+          ? "bg-red-500 text-white"
+          : index % 6 === 1
+          ? "bg-blue-500 text-white"
+          : index % 6 === 2
+          ? "bg-green-500 text-white"
+          : index % 6 === 3
+          ? "bg-yellow-500 text-gray-900"
+          : index % 6 === 4
+          ? "bg-indigo-500 text-white"
+          : "bg-purple-500 text-white"
+      }`;
+    } else {
+      return "bg-purple-100 text-purple-800";
+    }
+  };
+
+  // Skill data for each category
+  const skillCategories = [
+    {
+      id: "frontend",
+      icon: <FaReact className='text-blue-500 h-12 w-12' />,
+      title: "Frontend",
+      skills: ["React", "Tailwind CSS", "Redux", "JavaScript", "TypeScript"],
+    },
+    {
+      id: "backend",
+      icon: (
+        <FaServer
+          className={`h-12 w-12 ${
+            isDarkMode ? "text-gray-300" : "text-gray-600"
+          }`}
+        />
+      ),
+      title: "Backend",
+      skills: ["Node.js", "Express.js", "Golang", "REST APIs", "GraphQL"],
+    },
+    {
+      id: "database",
+      icon: <SiMongodb className='text-green-500 h-12 w-12' />,
+      title: "Database",
+      skills: ["MongoDB", "PostgreSQL", "Firebase"],
+    },
+    {
+      id: "mobile",
+      icon: <FaMobile className='text-purple-500 h-12 w-12' />,
+      title: "Mobile",
+      skills: ["React Native", "Expo", "iOS", "Android"],
+    },
+  ];
+
   return (
     <motion.div
       className={`p-8 ${
@@ -47,116 +107,58 @@ const Skills = () => {
     >
       {/* Title */}
       <motion.h1
-        className={`text-xl font-bold ${
+        className={`text-2xl font-bold text-center ${
           isDarkMode ? "text-blue-400" : "text-blue-600"
         } transition-colors duration-300`}
         variants={slideIn}
         transition={{ duration: 0.6 }}
       >
-        Skills
+        Skills & Technologies
       </motion.h1>
 
       {/* Skill Cards */}
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-8 mt-8'>
-        {/* Frontend Developer */}
-        <motion.div
-          className={`p-6 rounded-lg shadow-lg ${
-            isDarkMode ? "bg-gray-800" : "bg-white"
-          } ${
-            clickedSkill === "frontend" ? "transform rotate-5" : ""
-          } transition-colors duration-300`}
-          variants={slideIn}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          whileHover={cardRotate.whileHover}
-          whileTap={cardRotate.whileTap}
-          onClick={() => handleCardClick("frontend")}
-        >
-          <div className='flex items-center justify-center mb-4'>
-            <FaReact className='text-blue-500 h-16 w-16' />
-          </div>
-          <h2
-            className={`text-lg font-bold ${
-              isDarkMode ? "text-blue-400" : "text-blue-600"
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8'>
+        {skillCategories.map((category, categoryIndex) => (
+          <motion.div
+            key={category.id}
+            className={`p-6 rounded-lg shadow-lg ${
+              isDarkMode ? "bg-gray-800" : "bg-white"
+            } ${
+              clickedSkill === category.id ? "transform rotate-5" : ""
             } transition-colors duration-300`}
+            variants={slideIn}
+            transition={{ duration: 0.8, delay: 0.2 * (categoryIndex + 1) }}
+            whileHover={cardRotate.whileHover}
+            whileTap={cardRotate.whileTap}
+            onClick={() => handleCardClick(category.id)}
           >
-            Frontend
-          </h2>
-          <p
-            className={`text-sm mt-2 ${
-              isDarkMode ? "text-gray-300" : "text-gray-600"
-            } transition-colors duration-300`}
-          >
-            React.js, Tailwind CSS
-          </p>
-        </motion.div>
-
-        {/* Backend Developer */}
-        <motion.div
-          className={`p-6 rounded-lg shadow-lg ${
-            isDarkMode ? "bg-gray-800" : "bg-white"
-          } ${
-            clickedSkill === "backend" ? "transform rotate-5" : ""
-          } transition-colors duration-300`}
-          variants={slideIn}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          whileHover={cardRotate.whileHover}
-          whileTap={cardRotate.whileTap}
-          onClick={() => handleCardClick("backend")}
-        >
-          <div className='flex items-center justify-center mb-4'>
-            <FaServer
-              className={`h-16 w-16 ${
-                isDarkMode ? "text-gray-300" : "text-gray-600"
+            <div className='flex items-center justify-center mb-4'>
+              {category.icon}
+            </div>
+            <h2
+              className={`text-lg font-bold text-center ${
+                isDarkMode ? "text-blue-400" : "text-blue-600"
               } transition-colors duration-300`}
-            />
-          </div>
-          <h2
-            className={`text-lg font-bold ${
-              isDarkMode ? "text-blue-400" : "text-blue-600"
-            } transition-colors duration-300`}
-          >
-            Backend
-          </h2>
-          <p
-            className={`text-sm mt-2 ${
-              isDarkMode ? "text-gray-300" : "text-gray-600"
-            } transition-colors duration-300`}
-          >
-            Node.js, Express.js, Golang
-          </p>
-        </motion.div>
+            >
+              {category.title}
+            </h2>
 
-        {/* Database */}
-        <motion.div
-          className={`p-6 rounded-lg shadow-lg ${
-            isDarkMode ? "bg-gray-800" : "bg-white"
-          } ${
-            clickedSkill === "database" ? "transform rotate-5" : ""
-          } transition-colors duration-300`}
-          variants={slideIn}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          whileHover={cardRotate.whileHover}
-          whileTap={cardRotate.whileTap}
-          onClick={() => handleCardClick("database")}
-        >
-          <div className='flex items-center justify-center mb-4'>
-            <SiMongodb className='text-green-500 h-16 w-16' />
-          </div>
-          <h2
-            className={`text-lg font-bold ${
-              isDarkMode ? "text-blue-400" : "text-blue-600"
-            } transition-colors duration-300`}
-          >
-            Database
-          </h2>
-          <p
-            className={`text-sm mt-2 ${
-              isDarkMode ? "text-gray-300" : "text-gray-600"
-            } transition-colors duration-300`}
-          >
-            MongoDB
-          </p>
-        </motion.div>
+            {/* Colorful skill tags integrated into each card */}
+            <div className='flex flex-wrap justify-center gap-2 mt-4'>
+              {category.skills.map((skill, skillIndex) => (
+                <span
+                  key={skill}
+                  className={`px-3 py-1 rounded-full text-xs font-medium ${getColorClass(
+                    skillIndex,
+                    isDarkMode
+                  )} transition-colors duration-300`}
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        ))}
       </div>
     </motion.div>
   );

@@ -3,3 +3,99 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom cursor styles */
+body {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%236366f1"/></svg>')
+      12 12,
+    auto;
+}
+
+body.dark {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%22c55e"/></svg>')
+      12 12,
+    auto;
+}
+
+button,
+a,
+.cursor-pointer {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%23f97316"/></svg>')
+      12 12,
+    pointer;
+}
+
+/* Rainbow text animation */
+.rainbow-text {
+  background: linear-gradient(
+    to right,
+    #ef4444,
+    #f97316,
+    #eab308,
+    #22c55e,
+    #3b82f6,
+    #6366f1,
+    #8b5cf6
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 2s linear infinite;
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* Additional colorful elements for dark mode */
+.dark .colorful-heading {
+  background: linear-gradient(to right, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .colorful-button {
+  background: linear-gradient(to right, #ef4444, #f97316);
+  color: white;
+}
+
+.dark .colorful-button:hover {
+  background: linear-gradient(to right, #dc2626, #ea580c);
+}
+
+.dark .colorful-border {
+  border-image: linear-gradient(to right, #22c55e, #3b82f6);
+  border-image-slice: 1;
+}
+
+.dark .colorful-card {
+  background: linear-gradient(to bottom right, #1f2937, #111827);
+  border-left: 4px solid;
+  border-image: linear-gradient(to bottom, #ef4444, #8b5cf6);
+  border-image-slice: 1;
+}
+
+/* Animated background for dark mode */
+.dark .animated-bg {
+  background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #475569);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

@@ -1,3 +1,4 @@
+// Projects.jsx (updated with colorful elements)
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import cryptoplace from "../assets/cryptoPlace.png";
@@ -5,7 +6,7 @@ import jersey from "../assets/jersey-shop.png";
 import pa_ai from "../assets/pa-ai.png";
 import { FaServer, FaGithub, FaPlay, FaExternalLinkAlt } from "react-icons/fa";
 import { SiGo } from "react-icons/si";
-import { useTheme } from "../App"; // Import the useTheme hook
+import { useTheme } from "../App";
 
 const projects = [
   {
@@ -14,6 +15,7 @@ const projects = [
     img: jersey,
     link: "https://pa-jersey-shop.vercel.app",
     type: "web",
+    color: "rainbow-green",
   },
   {
     id: 2,
@@ -21,6 +23,7 @@ const projects = [
     img: cryptoplace,
     link: "https://pa-crypto.vercel.app",
     type: "web",
+    color: "rainbow-blue",
   },
   {
     id: 3,
@@ -28,6 +31,7 @@ const projects = [
     img: <SiGo className='w-12 h-12 text-blue-600 dark:text-blue-400' />,
     link: "https://github.com/haile-paa/ecommerce-backend",
     type: "web",
+    color: "rainbow-indigo",
   },
   {
     id: 4,
@@ -35,6 +39,7 @@ const projects = [
     img: pa_ai,
     link: "https://haile-paa.github.io/PA-AI",
     type: "web",
+    color: "rainbow-violet",
   },
 ];
 
@@ -54,6 +59,7 @@ const mobileApps = [
       "Location-based forecasts",
       "Severe weather alerts",
     ],
+    color: "rainbow-blue",
   },
   {
     id: 2,
@@ -70,6 +76,7 @@ const mobileApps = [
       "Progress charts",
       "Social sharing",
     ],
+    color: "rainbow-red",
   },
 ];
 
@@ -77,7 +84,7 @@ const Projects = () => {
   const [activeTab, setActiveTab] = useState("web");
   const [selectedApp, setSelectedApp] = useState(mobileApps[0]);
   const [isDemoPlaying, setIsDemoPlaying] = useState(false);
-  const { isDarkMode } = useTheme(); // Get the current theme
+  const { isDarkMode } = useTheme();
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -89,16 +96,30 @@ const Projects = () => {
     setIsDemoPlaying(true);
   };
 
+  // Get color class based on project and theme
+  const getColorClass = (color, isBg = false) => {
+    if (!isDarkMode) {
+      return isBg ? "bg-purple-100" : "text-purple-800";
+    }
+    return isBg ? `bg-${color}` : "text-white";
+  };
+
   return (
     <motion.section
-      className={`px-8 py-16 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'} transition-colors duration-300`}
+      className={`px-8 py-16 ${
+        isDarkMode ? "bg-gray-800" : "bg-gray-50"
+      } transition-colors duration-300`}
       variants={fadeIn}
       initial='hidden'
       animate='visible'
       transition={{ duration: 1, ease: "easeOut" }}
     >
       <div className='text-center mb-12'>
-        <h2 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} transition-colors duration-300`}>
+        <h2
+          className={`text-3xl font-bold ${
+            isDarkMode ? "text-white" : "text-gray-900"
+          } transition-colors duration-300`}
+        >
           My Recent Work
         </h2>
 
@@ -108,8 +129,14 @@ const Projects = () => {
             <button
               className={`px-6 py-2 font-medium ${
                 activeTab === "web"
-                  ? "bg-blue-600 text-white"
-                  : `${isDarkMode ? 'bg-gray-700 text-gray-300' : 'bg-white text-gray-700'}`
+                  ? isDarkMode
+                    ? "bg-rainbow-green text-white"
+                    : "bg-blue-600 text-white"
+                  : `${
+                      isDarkMode
+                        ? "bg-gray-700 text-gray-300"
+                        : "bg-white text-gray-700"
+                    }`
               } transition-colors duration-300`}
               onClick={() => setActiveTab("web")}
             >
@@ -118,8 +145,14 @@ const Projects = () => {
             <button
               className={`px-6 py-2 font-medium ${
                 activeTab === "mobile"
-                  ? "bg-blue-600 text-white"
-                  : `${isDarkMode ? 'bg-gray-700 text-gray-300' : 'bg-white text-gray-700'}`
+                  ? isDarkMode
+                    ? "bg-rainbow-blue text-white"
+                    : "bg-blue-600 text-white"
+                  : `${
+                      isDarkMode
+                        ? "bg-gray-700 text-gray-300"
+                        : "bg-white text-gray-700"
+                    }`
               } transition-colors duration-300`}
               onClick={() => setActiveTab("mobile")}
             >
@@ -128,14 +161,20 @@ const Projects = () => {
           </div>
         </div>
 
-        <p className={`mt-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} transition-colors duration-300`}>
+        <p
+          className={`mt-4 ${
+            isDarkMode ? "text-gray-300" : "text-gray-600"
+          } transition-colors duration-300`}
+        >
           {activeTab === "web"
             ? "Here are a few past web projects I've worked on."
             : "Check out my mobile applications with live previews."}{" "}
           Want to see more?{" "}
           <a
             href='mailto:haileyesuseyasu@gmail.com'
-            className={`${isDarkMode ? 'text-blue-400' : 'text-blue-600'} hover:underline transition-colors duration-300`}
+            className={`${
+              isDarkMode ? "text-rainbow-blue" : "text-blue-600"
+            } hover:underline transition-colors duration-300`}
           >
             Email me.
           </a>
@@ -153,7 +192,9 @@ const Projects = () => {
           {projects.map((project) => (
             <div
               key={project.id}
-              className={`group relative rounded-lg overflow-hidden shadow-lg ${isDarkMode ? 'bg-gray-700' : 'bg-white'} transition-colors duration-300`}
+              className={`group relative rounded-lg overflow-hidden shadow-lg ${
+                isDarkMode ? "bg-gray-700" : "bg-white"
+              } transition-colors duration-300`}
             >
               <div
                 className={`w-full h-48 ${
@@ -192,9 +233,18 @@ const Projects = () => {
               </a>
 
               <div className='p-4'>
-                <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-gray-200' : 'text-gray-800'} transition-colors duration-300`}>
+                <h3
+                  className={`text-lg font-semibold ${
+                    isDarkMode ? "text-gray-200" : "text-gray-800"
+                  } transition-colors duration-300`}
+                >
                   {project.title}
                 </h3>
+                <div
+                  className={`mt-2 w-12 h-1 ${
+                    isDarkMode ? `bg-${project.color}` : "bg-purple-500"
+                  }`}
+                ></div>
               </div>
             </div>
           ))}
@@ -211,7 +261,11 @@ const Projects = () => {
         >
           {/* App Demo Section */}
           <div className='w-full lg:w-1/2'>
-            <div className={`rounded-xl shadow-lg overflow-hidden ${isDarkMode ? 'bg-gray-700' : 'bg-white'} transition-colors duration-300`}>
+            <div
+              className={`rounded-xl shadow-lg overflow-hidden ${
+                isDarkMode ? "bg-gray-700" : "bg-white"
+              } transition-colors duration-300`}
+            >
               <div className='relative'>
                 {/* Phone Mockup */}
                 <div className='phone-mockup mx-auto'>
@@ -225,17 +279,35 @@ const Projects = () => {
                         allowFullScreen
                       />
                     ) : (
-                      <div className={`h-full flex flex-col items-center justify-center p-4 ${isDarkMode ? 'bg-gray-800' : 'bg-gradient-to-br from-blue-50 to-purple-50'} transition-colors duration-300`}>
+                      <div
+                        className={`h-full flex flex-col items-center justify-center p-4 ${
+                          isDarkMode
+                            ? "bg-gray-800"
+                            : "bg-gradient-to-br from-blue-50 to-purple-50"
+                        } transition-colors duration-300`}
+                      >
                         <div className='text-center'>
-                          <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'} transition-colors duration-300`}>
+                          <h3
+                            className={`text-xl font-bold ${
+                              isDarkMode ? "text-white" : "text-gray-800"
+                            } transition-colors duration-300`}
+                          >
                             {selectedApp.title}
                           </h3>
-                          <p className={`mb-6 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} transition-colors duration-300`}>
+                          <p
+                            className={`mb-6 ${
+                              isDarkMode ? "text-gray-300" : "text-gray-600"
+                            } transition-colors duration-300`}
+                          >
                             {selectedApp.description}
                           </p>
                           <button
                             onClick={handlePlayDemo}
-                            className='flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors mx-auto'
+                            className={`flex items-center justify-center gap-2 ${
+                              isDarkMode
+                                ? "bg-rainbow-green hover:bg-rainbow-blue"
+                                : "bg-blue-600 hover:bg-blue-700"
+                            } text-white px-6 py-3 rounded-lg transition-colors mx-auto`}
                           >
                             <FaPlay className='text-sm' />
                             <span>Launch Live Demo</span>
@@ -249,7 +321,11 @@ const Projects = () => {
 
               <div className='p-6'>
                 <div className='flex justify-between items-center mb-4'>
-                  <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'} transition-colors duration-300`}>
+                  <h3
+                    className={`text-xl font-bold ${
+                      isDarkMode ? "text-white" : "text-gray-800"
+                    } transition-colors duration-300`}
+                  >
                     {selectedApp.title}
                   </h3>
                   <div className='flex gap-2'>
@@ -257,7 +333,11 @@ const Projects = () => {
                       href={selectedApp.playStoreLink}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='bg-green-600 hover:bg-green-700 text-white p-2 rounded-lg transition-colors'
+                      className={`${
+                        isDarkMode
+                          ? "bg-rainbow-green hover:bg-rainbow-blue"
+                          : "bg-green-600 hover:bg-green-700"
+                      } text-white p-2 rounded-lg transition-colors`}
                       title='Google Play Store'
                     >
                       <svg
@@ -272,7 +352,11 @@ const Projects = () => {
                       href={selectedApp.appStoreLink}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='bg-gray-800 hover:bg-gray-900 text-white p-2 rounded-lg transition-colors'
+                      className={`${
+                        isDarkMode
+                          ? "bg-rainbow-blue hover:bg-rainbow-indigo"
+                          : "bg-gray-800 hover:bg-gray-900"
+                      } text-white p-2 rounded-lg transition-colors`}
                       title='Apple App Store'
                     >
                       <svg
@@ -287,7 +371,11 @@ const Projects = () => {
                       href={selectedApp.demoLink}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-colors'
+                      className={`${
+                        isDarkMode
+                          ? "bg-rainbow-violet hover:bg-rainbow-red"
+                          : "bg-blue-600 hover:bg-blue-700"
+                      } text-white p-2 rounded-lg transition-colors`}
                       title='Open in New Tab'
                     >
                       <FaExternalLinkAlt className='w-4 h-4' />
@@ -295,13 +383,27 @@ const Projects = () => {
                   </div>
                 </div>
 
-                <p className={`mb-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} transition-colors duration-300`}>{selectedApp.description}</p>
+                <p
+                  className={`mb-4 ${
+                    isDarkMode ? "text-gray-300" : "text-gray-600"
+                  } transition-colors duration-300`}
+                >
+                  {selectedApp.description}
+                </p>
 
                 <div className='mb-4'>
-                  <h4 className={`font-semibold mb-2 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'} transition-colors duration-300`}>
+                  <h4
+                    className={`font-semibold mb-2 ${
+                      isDarkMode ? "text-gray-200" : "text-gray-800"
+                    } transition-colors duration-300`}
+                  >
                     Key Features:
                   </h4>
-                  <ul className={`list-disc list-inside ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} transition-colors duration-300`}>
+                  <ul
+                    className={`list-disc list-inside ${
+                      isDarkMode ? "text-gray-300" : "text-gray-600"
+                    } transition-colors duration-300`}
+                  >
                     {selectedApp.features.map((feature, index) => (
                       <li key={index}>{feature}</li>
                     ))}
@@ -309,14 +411,34 @@ const Projects = () => {
                 </div>
 
                 <div>
-                  <h4 className={`font-semibold mb-2 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'} transition-colors duration-300`}>
+                  <h4
+                    className={`font-semibold mb-2 ${
+                      isDarkMode ? "text-gray-200" : "text-gray-800"
+                    } transition-colors duration-300`}
+                  >
                     Technologies:
                   </h4>
                   <div className='flex flex-wrap gap-2'>
                     {selectedApp.technologies.map((tech, index) => (
                       <span
                         key={index}
-                        className={`px-3 py-1 rounded-full text-sm ${isDarkMode ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'} transition-colors duration-300`}
+                        className={`px-3 py-1 rounded-full text-sm ${
+                          isDarkMode
+                            ? `${
+                                index % 6 === 0
+                                  ? "bg-rainbow-red text-white"
+                                  : index % 6 === 1
+                                  ? "bg-rainbow-blue text-white"
+                                  : index % 6 === 2
+                                  ? "bg-rainbow-green text-white"
+                                  : index % 6 === 3
+                                  ? "bg-rainbow-yellow text-gray-900"
+                                  : index % 6 === 4
+                                  ? "bg-rainbow-indigo text-white"
+                                  : "bg-rainbow-violet text-white"
+                              }`
+                            : "bg-blue-100 text-blue-800"
+                        } transition-colors duration-300`}
                       >
                         {tech}
                       </span>
@@ -329,10 +451,18 @@ const Projects = () => {
 
           {/* App Selection */}
           <div className='w-full lg:w-1/2'>
-            <h3 className={`text-2xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-800'} transition-colors duration-300`}>
+            <h3
+              className={`text-2xl font-bold mb-6 ${
+                isDarkMode ? "text-white" : "text-gray-800"
+              } transition-colors duration-300`}
+            >
               My Mobile Applications
             </h3>
-            <p className={`mb-8 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} transition-colors duration-300`}>
+            <p
+              className={`mb-8 ${
+                isDarkMode ? "text-gray-300" : "text-gray-600"
+              } transition-colors duration-300`}
+            >
               These are native mobile applications I've developed using React
               Native. Each app is available on both iOS and Android platforms.
               Click on any app to view details and launch a live demo.
@@ -348,28 +478,62 @@ const Projects = () => {
                   }}
                   className={`p-4 rounded-xl cursor-pointer transition-all ${
                     selectedApp.id === app.id
-                      ? `${isDarkMode ? 'bg-blue-900 border-blue-500' : 'bg-blue-50 border-blue-500'} border-2`
-                      : `${isDarkMode ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' : 'bg-white border-gray-200 hover:bg-gray-50'} border`
+                      ? `${
+                          isDarkMode
+                            ? `bg-${app.color} border-${app.color}`
+                            : "bg-blue-50 border-blue-500"
+                        } border-2`
+                      : `${
+                          isDarkMode
+                            ? "bg-gray-700 border-gray-600 hover:bg-gray-600"
+                            : "bg-white border-gray-200 hover:bg-gray-50"
+                        } border`
                   } transition-colors duration-300`}
                 >
                   <div className='flex items-start gap-4'>
-                    <div className='flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl flex items-center justify-center shadow-md'>
+                    <div
+                      className={`flex-shrink-0 w-16 h-16 ${
+                        isDarkMode
+                          ? `bg-${app.color}`
+                          : "bg-gradient-to-br from-blue-400 to-purple-500"
+                      } rounded-xl flex items-center justify-center shadow-md`}
+                    >
                       <span className='text-white text-2xl'>
                         {app.id === 1 ? "🌤️" : "🏃"}
                       </span>
                     </div>
                     <div>
-                      <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-800'} transition-colors duration-300`}>
+                      <h4
+                        className={`font-semibold ${
+                          isDarkMode ? "text-white" : "text-gray-800"
+                        } transition-colors duration-300`}
+                      >
                         {app.title}
                       </h4>
-                      <p className={`text-sm mt-1 line-clamp-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} transition-colors duration-300`}>
+                      <p
+                        className={`text-sm mt-1 line-clamp-2 ${
+                          isDarkMode ? "text-gray-300" : "text-gray-600"
+                        } transition-colors duration-300`}
+                      >
                         {app.description}
                       </p>
                       <div className='flex flex-wrap gap-1 mt-2'>
                         {app.technologies.slice(0, 3).map((tech, index) => (
                           <span
                             key={index}
-                            className={`px-2 py-1 rounded-full text-xs ${isDarkMode ? 'bg-gray-600 text-gray-200' : 'bg-gray-100 text-gray-700'} transition-colors duration-300`}
+                            className={`px-2 py-1 rounded-full text-xs ${
+                              isDarkMode
+                                ? `${
+                                    index % 6 === 0
+                                      ? "bg-rainbow-red text-white"
+                                      : index % 6 === 1
+                                      ? "bg-rainbow-blue text-white"
+                                      : index % 6 === 2
+                                      ? "bg-rainbow-green text-white"
+                                      : "bg-gray-600 text-gray-200"
+                                  }`
+                                : "bg-gray-100 text-gray-700"
+                            } transition-colors duration-300`}
                           >
                             {tech}
                           </span>
@@ -381,14 +545,27 @@ const Projects = () => {
               ))}
             </div>
 
-            <div className={`mt-8 rounded-xl p-6 ${isDarkMode ? 'bg-blue-900' : 'bg-blue-50'} transition-colors duration-300`}>
-              <h4 className={`font-semibold mb-2 ${isDarkMode ? 'text-blue-200' : 'text-blue-800'} transition-colors duration-300`}>
+            <div
+              className={`mt-8 rounded-xl p-6 ${
+                isDarkMode ? "bg-rainbow-indigo" : "bg-blue-50"
+              } transition-colors duration-300`}
+            >
+              <h4
+                className={`font-semibold mb-2 ${
+                  isDarkMode ? "text-blue-200" : "text-blue-800"
+                } transition-colors duration-300`}
+              >
                 About the Live Demos
               </h4>
-              <p className={`text-sm ${isDarkMode ? 'text-blue-200' : 'text-blue-700'} transition-colors duration-300`}>
+              <p
+                className={`text-sm ${
+                  isDarkMode ? "text-blue-200" : "text-blue-700"
+                } transition-colors duration-300`}
+              >
                 The live demos are powered by React Native Web, allowing you to
                 experience the app directly in your browser. For the full native
-                experience with all features, download the app from the app stores.
+                experience with all features, download the app from the app
+                stores.
               </p>
             </div>
           </div>
@@ -400,14 +577,16 @@ const Projects = () => {
           position: relative;
           width: 320px;
           height: 650px;
-          background: ${isDarkMode ? '#374151' : '#f0f0f0'};
+          background: ${isDarkMode ? "#374151" : "#f0f0f0"};
           border-radius: 40px;
-          box-shadow: 0 0 0 11px ${isDarkMode ? '#111827' : '#1f1f1f'}, 0 0 0 13px ${isDarkMode ? '#1f2937' : '#191919'}, 0 0 0 20px ${isDarkMode ? '#0f172a' : '#111'};
+          box-shadow: 0 0 0 11px ${isDarkMode ? "#111827" : "#1f1f1f"},
+            0 0 0 13px ${isDarkMode ? "#1f2937" : "#191919"},
+            0 0 0 20px ${isDarkMode ? "#0f172a" : "#111"};
           overflow: hidden;
           margin: 0 auto;
           transition: all 0.3s ease;
         }
-        
+
         .phone-mockup:before {
           content: "";
           position: absolute;
@@ -416,11 +595,11 @@ const Projects = () => {
           transform: translateX(-50%);
           width: 56%;
           height: 25px;
-          background: ${isDarkMode ? '#111827' : '#1f1f1f'};
+          background: ${isDarkMode ? "#111827" : "#1f1f1f"};
           border-radius: 0 0 10px 10px;
           z-index: 2;
         }
-        
+
         .phone-screen {
           position: absolute;
           top: 50%;
@@ -432,7 +611,7 @@ const Projects = () => {
           border-radius: 30px;
           overflow: hidden;
         }
-        
+
         .line-clamp-2 {
           display: -webkit-box;
           -webkit-line-clamp: 2;

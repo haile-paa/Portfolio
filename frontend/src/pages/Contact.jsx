@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
-import { useTheme } from "../App"; // Import the useTheme hook
+import { useTheme } from "../App";
 
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
-  const { isDarkMode } = useTheme(); // Get the current theme
+  const { isDarkMode } = useTheme();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,13 +52,13 @@ const Contact = () => {
 
   return (
     <div
-      className={`container mx-auto p-8 ${
-        isDarkMode ? "bg-gray-900 min-h-screen" : "bg-gray-50 min-h-screen"
+      className={`container mx-auto p-8 min-h-screen ${
+        isDarkMode ? "bg-gray-900 animated-bg" : "bg-gray-50"
       } transition-colors duration-300`}
     >
       <motion.h2
-        className={`text-3xl font-bold text-center mb-4 ${
-          isDarkMode ? "text-white" : "text-gray-800"
+        className={`text-3xl font-bold text-center mb-6 ${
+          isDarkMode ? "text-white colorful-heading" : "text-gray-800"
         } transition-colors duration-300`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -81,7 +81,7 @@ const Contact = () => {
         >
           <label
             className={`block text-lg font-medium mb-2 ${
-              isDarkMode ? "text-white" : "text-gray-800"
+              isDarkMode ? "text-gray-200" : "text-gray-800"
             } transition-colors duration-300`}
           >
             Name
@@ -92,9 +92,9 @@ const Contact = () => {
             onChange={(e) => setName(e.target.value)}
             className={`w-full p-3 border rounded-md ${
               isDarkMode
-                ? "bg-gray-800 border-gray-700 text-white"
-                : "bg-white border-gray-300 text-gray-800"
-            } transition-colors duration-300`}
+                ? "bg-gray-800 border-gray-700 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                : "bg-white border-gray-300 text-gray-800 focus:border-purple-500 focus:ring-2 focus:ring-purple-500"
+            } transition-colors duration-300 outline-none`}
             required
           />
         </motion.div>
@@ -107,7 +107,7 @@ const Contact = () => {
         >
           <label
             className={`block text-lg font-medium mb-2 ${
-              isDarkMode ? "text-white" : "text-gray-800"
+              isDarkMode ? "text-gray-200" : "text-gray-800"
             } transition-colors duration-300`}
           >
             Email
@@ -118,9 +118,9 @@ const Contact = () => {
             onChange={(e) => setEmail(e.target.value)}
             className={`w-full p-3 border rounded-md ${
               isDarkMode
-                ? "bg-gray-800 border-gray-700 text-white"
-                : "bg-white border-gray-300 text-gray-800"
-            } transition-colors duration-300`}
+                ? "bg-gray-800 border-gray-700 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                : "bg-white border-gray-300 text-gray-800 focus:border-purple-500 focus:ring-2 focus:ring-purple-500"
+            } transition-colors duration-300 outline-none`}
             required
           />
         </motion.div>
@@ -133,7 +133,7 @@ const Contact = () => {
         >
           <label
             className={`block text-lg font-medium mb-2 ${
-              isDarkMode ? "text-white" : "text-gray-800"
+              isDarkMode ? "text-gray-200" : "text-gray-800"
             } transition-colors duration-300`}
           >
             Description
@@ -143,9 +143,9 @@ const Contact = () => {
             onChange={(e) => setDescription(e.target.value)}
             className={`w-full p-3 border rounded-md ${
               isDarkMode
-                ? "bg-gray-800 border-gray-700 text-white"
-                : "bg-white border-gray-300 text-gray-800"
-            } transition-colors duration-300`}
+                ? "bg-gray-800 border-gray-700 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                : "bg-white border-gray-300 text-gray-800 focus:border-purple-500 focus:ring-2 focus:ring-purple-500"
+            } transition-colors duration-300 outline-none`}
             rows='5'
             required
           />
@@ -159,7 +159,11 @@ const Contact = () => {
         >
           <button
             type='submit'
-            className='bg-purple-500 text-white px-6 py-3 rounded-md hover:bg-purple-600 transition-colors'
+            className={`px-6 py-3 rounded-md text-white font-medium ${
+              isDarkMode
+                ? "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                : "bg-purple-500 hover:bg-purple-600"
+            } transition-colors duration-300`}
           >
             Submit
           </button>

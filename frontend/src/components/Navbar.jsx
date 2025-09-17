@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { motion } from "framer-motion";
-import { useTheme } from "../App"; // Import the useTheme hook
+import { useTheme } from "../App";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef(null);
-  const { isDarkMode, toggleTheme } = useTheme(); // Get theme state and toggle function
+  const { isDarkMode, toggleTheme } = useTheme();
 
   // Toggle the mobile menu
   const toggleMobileMenu = () => {
@@ -25,10 +25,7 @@ const Navbar = () => {
       }
     };
 
-    // Add event listener on mount
     document.addEventListener("mousedown", handleClickOutside);
-
-    // Cleanup event listener on unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -48,6 +45,9 @@ const Navbar = () => {
     transition: { duration: 0.3 },
   };
 
+  // Colorful text animation for dark mode
+  const colorfulText = isDarkMode ? "rainbow-text" : "text-purple-500";
+
   return (
     <motion.div
       className='flex justify-between items-center px-8 py-4 bg-white dark:bg-gray-800 shadow-md transition-colors duration-300'
@@ -57,12 +57,12 @@ const Navbar = () => {
     >
       {/* Logo / Home Link with Hover Animation */}
       <motion.div
-        className='text-purple-500 font-bold text-2xl'
+        className={`font-bold text-2xl ${colorfulText}`}
         variants={fadeIn}
       >
         <Link to='/'>
           <motion.img
-            src={assets.logo}
+            src={isDarkMode ? assets.logo2 : assets.logo} // Use logo2 for dark mode
             alt='Logo'
             className='h-20 w-auto'
             whileHover={hoverAnimation}
@@ -80,8 +80,8 @@ const Navbar = () => {
           to='/'
           className={({ isActive }) =>
             isActive
-              ? "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white border-b-2 border-blue-500 pb-1 transition-colors duration-300"
-              : "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white border-b-2 border-transparent transition-colors duration-300"
+              ? `text-gray-600 hover:text-gray-900 dark:text-rainbow-green dark:hover:text-rainbow-green border-b-2 border-green-500 pb-1 transition-colors duration-300`
+              : `text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-rainbow-green border-b-2 border-transparent transition-colors duration-300`
           }
         >
           Home
@@ -90,8 +90,8 @@ const Navbar = () => {
           to='/about'
           className={({ isActive }) =>
             isActive
-              ? "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white border-b-2 border-blue-500 pb-1 transition-colors duration-300"
-              : "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white border-b-2 border-transparent transition-colors duration-300"
+              ? `text-gray-600 hover:text-gray-900 dark:text-rainbow-blue dark:hover:text-rainbow-blue border-b-2 border-blue-500 pb-1 transition-colors duration-300`
+              : `text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-rainbow-blue border-b-2 border-transparent transition-colors duration-300`
           }
         >
           About
@@ -100,8 +100,8 @@ const Navbar = () => {
           to='/projects'
           className={({ isActive }) =>
             isActive
-              ? "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white border-b-2 border-blue-500 pb-1 transition-colors duration-300"
-              : "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white border-b-2 border-transparent transition-colors duration-300"
+              ? `text-gray-600 hover:text-gray-900 dark:text-rainbow-red dark:hover:text-rainbow-red border-b-2 border-red-500 pb-1 transition-colors duration-300`
+              : `text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-rainbow-red border-b-2 border-transparent transition-colors duration-300`
           }
         >
           Projects
@@ -114,7 +114,11 @@ const Navbar = () => {
         <motion.div className='flex justify-center items-center w-full md:w-auto'>
           <NavLink
             to='/contact'
-            className='border border-purple-500 text-purple-500 dark:border-purple-400 dark:text-purple-400 px-4 py-2 rounded-full hover:bg-purple-500 hover:text-white dark:hover:bg-purple-600 transition-colors duration-300'
+            className={`px-4 py-2 rounded-full transition-colors duration-300 ${
+              isDarkMode
+                ? "colorful-button"
+                : "border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white"
+            }`}
           >
             Say Hello
           </NavLink>
@@ -123,12 +127,16 @@ const Navbar = () => {
         {/* Dark Mode Toggle Button */}
         <button
           onClick={toggleTheme}
-          className='p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300'
+          className={`p-2 rounded-full transition-colors duration-300 ${
+            isDarkMode
+              ? "bg-blue-500 text-yellow-300"
+              : "bg-gray-200 text-gray-700"
+          }`}
           aria-label='Toggle dark mode'
         >
           {isDarkMode ? (
             <svg
-              className='h-6 w-6 text-yellow-400'
+              className='h-6 w-6 text-yellow-300'
               fill='none'
               viewBox='0 0 24 24'
               stroke='currentColor'
@@ -142,7 +150,7 @@ const Navbar = () => {
             </svg>
           ) : (
             <svg
-              className='h-6 w-6 text-gray-700'
+              className='h-6 w-6'
               fill='none'
               viewBox='0 0 24 24'
               stroke='currentColor'
@@ -160,7 +168,7 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <div className='md:hidden'>
           <button
-            className='text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-300'
+            className='text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-yellow-400 transition-colors duration-300'
             onClick={toggleMobileMenu}
           >
             <svg
@@ -194,8 +202,8 @@ const Navbar = () => {
             to='/'
             className={({ isActive }) =>
               isActive
-                ? "block text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white py-2 border-b-2 border-blue-500 transition-colors duration-300"
-                : "block text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white py-2 border-b-2 border-transparent transition-colors duration-300"
+                ? "block text-gray-600 hover:text-gray-900 dark:text-green-400 dark:hover:text-green-400 py-2 border-b-2 border-green-500 transition-colors duration-300"
+                : "block text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-green-400 py-2 border-b-2 border-transparent transition-colors duration-300"
             }
             onClick={() => setIsMobileMenuOpen(false)}
           >
@@ -205,8 +213,8 @@ const Navbar = () => {
             to='/about'
             className={({ isActive }) =>
               isActive
-                ? "block text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white py-2 border-b-2 border-blue-500 transition-colors duration-300"
-                : "block text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white py-2 border-b-2 border-transparent transition-colors duration-300"
+                ? "block text-gray-600 hover:text-gray-900 dark:text-blue-400 dark:hover:text-blue-400 py-2 border-b-2 border-blue-500 transition-colors duration-300"
+                : "block text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-blue-400 py-2 border-b-2 border-transparent transition-colors duration-300"
             }
             onClick={() => setIsMobileMenuOpen(false)}
           >
@@ -216,8 +224,8 @@ const Navbar = () => {
             to='/projects'
             className={({ isActive }) =>
               isActive
-                ? "block text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white py-2 border-b-2 border-blue-500 transition-colors duration-300"
-                : "block text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white py-2 border-b-2 border-transparent transition-colors duration-300"
+                ? "block text-gray-600 hover:text-gray-900 dark:text-red-400 dark:hover:text-red-400 py-2 border-b-2 border-red-500 transition-colors duration-300"
+                : "block text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-red-400 py-2 border-b-2 border-transparent transition-colors duration-300"
             }
             onClick={() => setIsMobileMenuOpen(false)}
           >

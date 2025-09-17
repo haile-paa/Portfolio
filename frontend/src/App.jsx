@@ -22,20 +22,14 @@ export const useTheme = () => {
 
 // Theme Provider Component
 const ThemeProvider = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true); // Default to true for dark mode
 
-  // Check if user has a theme preference in localStorage
+  // Set dark mode by default and override any saved preferences
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      setIsDarkMode(savedTheme === "dark");
-    } else {
-      // Check for system preference
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      setIsDarkMode(prefersDark);
-    }
+    // Always set to dark mode, ignore any saved preferences
+    setIsDarkMode(true);
+    localStorage.setItem("theme", "dark");
+    document.documentElement.classList.add("dark");
   }, []);
 
   // Update localStorage and document class when theme changes
@@ -63,7 +57,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className='min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300'>
+        <div className='min-h-screen bg-white dark:bg-black transition-colors duration-300'>
           <Navbar />
           <Routes>
             <Route path='/' element={<Hero />} />

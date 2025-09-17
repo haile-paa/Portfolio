@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import About from "../pages/About";
 import Projects from "../pages/Projects";
 import Skills from "../pages/Skills";
 import { assets } from "../assets/assets";
-import { useTheme } from "../App"; // Import the useTheme hook
+import { useTheme } from "../App";
 
 const Hero = () => {
-  const { isDarkMode } = useTheme(); // Get the current theme
+  const { isDarkMode } = useTheme();
+  const [text, setText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+  const fullText = "Full-Stack Developer";
 
   // Animation variants
   const fadeIn = {
@@ -15,24 +18,45 @@ const Hero = () => {
     visible: { opacity: 1, y: 0 },
   };
 
+  // Typewriter effect
+  useEffect(() => {
+    let currentIndex = 0;
+    const typingInterval = setInterval(() => {
+      if (currentIndex <= fullText.length) {
+        setText(fullText.substring(0, currentIndex));
+        currentIndex++;
+      } else {
+        setIsTyping(false);
+        clearInterval(typingInterval);
+      }
+    }, 100);
+
+    return () => clearInterval(typingInterval);
+  }, []);
+
   return (
     <div
       className={`text-center py-16 ${
         isDarkMode ? "bg-gray-900" : "bg-gray-50"
       } transition-colors duration-300`}
     >
-      {/* Title */}
-      <motion.h1
-        className={`text-4xl font-bold ${
-          isDarkMode ? "text-white" : "text-gray-800"
-        } transition-colors duration-300`}
+      {/* Title with Typewriter and Rainbow Effect */}
+      <motion.div
+        className='typewriter-container mb-4'
         variants={fadeIn}
         initial='hidden'
         animate='visible'
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        Full-Stack Web Developer
-      </motion.h1>
+        <h1
+          className={`text-4xl font-bold rainbow-text typewriter ${
+            isTyping ? "typing" : ""
+          }`}
+        >
+          {text}
+          <span className='cursor'>|</span>
+        </h1>
+      </motion.div>
 
       {/* Subtitle */}
       <motion.p
@@ -44,8 +68,8 @@ const Hero = () => {
         animate='visible'
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
       >
-        I design and code beautiful Web apps with amazing functionality, and I
-        love what I do.
+        I design and code beautiful Websites & Mobile Apps with amazing
+        functionality, and I love what I do.
       </motion.p>
 
       {/* Illustration */}
@@ -88,6 +112,76 @@ const Hero = () => {
       >
         <Projects />
       </motion.div>
+
+      {/* Add CSS for rainbow text and typewriter effect */}
+      <style jsx>{`
+        .rainbow-text {
+          background: linear-gradient(
+            to right,
+            #ef4444,
+            #f97316,
+            #eab308,
+            #22c55e,
+            #3b82f6,
+            #6366f1,
+            #8b5cf6
+          );
+          background-size: 200% auto;
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: rainbow 2s linear infinite;
+          display: inline-block;
+        }
+
+        @keyframes rainbow {
+          0% {
+            background-position: 0% 50%;
+          }
+          100% {
+            background-position: 200% 50%;
+          }
+        }
+
+        .typewriter-container {
+          display: inline-block;
+        }
+
+        .typewriter {
+          overflow: hidden;
+          white-space: nowrap;
+          margin: 0 auto;
+        }
+
+        .typing {
+          animation: typing 1.5s steps(22, end);
+        }
+
+        .cursor {
+          animation: blink 1s infinite;
+          color: ${isDarkMode ? "#fff" : "#000"};
+        }
+
+        @keyframes typing {
+          from {
+            width: 0;
+          }
+          to {
+            width: 100%;
+          }
+        }
+
+        @keyframes blink {
+          0%,
+          50% {
+            opacity: 1;
+          }
+          51%,
+          100% {
+            opacity: 0;
+          }
+        }
+      `}</style>
     </div>
   );
 };
