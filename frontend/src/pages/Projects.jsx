@@ -1,10 +1,16 @@
-// Projects.jsx (updated with colorful elements)
+// Projects.jsx (fixed for Appetize.io free plan)
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import cryptoplace from "../assets/cryptoPlace.png";
 import jersey from "../assets/jersey-shop.png";
 import pa_ai from "../assets/pa-ai.png";
-import { FaServer, FaGithub, FaPlay, FaExternalLinkAlt } from "react-icons/fa";
+import {
+  FaServer,
+  FaGithub,
+  FaPlay,
+  FaExternalLinkAlt,
+  FaMobileAlt,
+} from "react-icons/fa";
 import { SiGo } from "react-icons/si";
 import { useTheme } from "../App";
 
@@ -46,44 +52,57 @@ const projects = [
 const mobileApps = [
   {
     id: 1,
-    title: "Weather Forecast App",
+    title: "Ev charge stations finder App",
     description:
-      "Real-time weather updates with beautiful UI and detailed forecasts",
-    demoLink: "https://your-app-demo.vercel.app",
+      "Real-time charge stations finder with beautiful UI and Based on ur location",
+    appetizeId: "b_sll7pg2fmnybelml3cez6edyhy",
+    directLink: "https://appetize.io/app/b_sll7pg2fmnybelml3cez6edyhy",
     playStoreLink: "#",
     appStoreLink: "#",
-    technologies: ["React Native", "Redux", "Weather API"],
+    technologies: ["React Native", "Redux", "Google maps API"],
     features: [
-      "Live weather data",
-      "7-day forecast",
-      "Location-based forecasts",
-      "Severe weather alerts",
+      "Live location data",
+      "Find nearby stations",
+      "Interactive map with google maps",
+      "Station details",
+      "Register and login ur car data",
     ],
     color: "rainbow-blue",
+    config: {
+      device: "pixel6",
+      scale: 75,
+      orientation: "portrait",
+    },
   },
-  {
-    id: 2,
-    title: "Fitness Tracker",
-    description:
-      "Track workouts, set goals, and monitor your progress with detailed analytics",
-    demoLink: "https://your-fitness-demo.vercel.app",
-    playStoreLink: "#",
-    appStoreLink: "#",
-    technologies: ["React Native", "Firebase", "Health Kit", "Chart.js"],
-    features: [
-      "Workout tracking",
-      "Goal setting",
-      "Progress charts",
-      "Social sharing",
-    ],
-    color: "rainbow-red",
-  },
+  // {
+  //   id: 2,
+  //   title: "Fitness Tracker",
+  //   description:
+  //     "Track workouts, set goals, and monitor your progress with detailed analytics",
+  //   appetizeId: "YOUR_APPETIZE_APP_ID_2",
+  //   directLink: "https://appetize.io/app/YOUR_APPETIZE_APP_ID_2",
+  //   playStoreLink: "#",
+  //   appStoreLink: "#",
+  //   technologies: ["React Native", "Firebase", "Health Kit", "Chart.js"],
+  //   features: [
+  //     "Workout tracking",
+  //     "Goal setting",
+  //     "Progress charts",
+  //     "Social sharing",
+  //   ],
+  //   color: "rainbow-red",
+  //   config: {
+  //     device: "iphone12",
+  //     scale: 75,
+  //     orientation: "portrait",
+  //   },
+  // },
 ];
 
 const Projects = () => {
   const [activeTab, setActiveTab] = useState("web");
   const [selectedApp, setSelectedApp] = useState(mobileApps[0]);
-  const [isDemoPlaying, setIsDemoPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { isDarkMode } = useTheme();
 
   const fadeIn = {
@@ -93,7 +112,31 @@ const Projects = () => {
 
   // Function to handle demo playback
   const handlePlayDemo = () => {
-    setIsDemoPlaying(true);
+    setIsLoading(true);
+    // Open Appetize link in new tab
+    window.open(generateAppetizeUrl(selectedApp), "_blank");
+    // Simulate loading completion
+    setTimeout(() => setIsLoading(false), 1000);
+  };
+
+  // Function to generate Appetize.io direct URL
+  const generateAppetizeUrl = (app) => {
+    if (!app.appetizeId) return "#";
+
+    const baseUrl =
+      app.directLink || `https://appetize.io/app/${app.appetizeId}`;
+    const params = new URLSearchParams();
+
+    // Add configuration options
+    if (app.config) {
+      Object.keys(app.config).forEach((key) => {
+        if (app.config[key]) {
+          params.append(key, app.config[key]);
+        }
+      });
+    }
+
+    return `${baseUrl}?${params.toString()}`;
   };
 
   // Get color class based on project and theme
@@ -270,51 +313,67 @@ const Projects = () => {
                 {/* Phone Mockup */}
                 <div className='phone-mockup mx-auto'>
                   <div className='phone-screen'>
-                    {isDemoPlaying ? (
-                      <iframe
-                        src={selectedApp.demoLink}
-                        className='w-full h-full border-0'
-                        title={`${selectedApp.title} Demo`}
-                        allow='accelerometer; camera; encrypted-media; geolocation; gyroscope; microphone; midi; payment'
-                        allowFullScreen
-                      />
-                    ) : (
-                      <div
-                        className={`h-full flex flex-col items-center justify-center p-4 ${
-                          isDarkMode
-                            ? "bg-gray-800"
-                            : "bg-gradient-to-br from-blue-50 to-purple-50"
-                        } transition-colors duration-300`}
-                      >
-                        <div className='text-center'>
-                          <h3
-                            className={`text-xl font-bold ${
-                              isDarkMode ? "text-white" : "text-gray-800"
-                            } transition-colors duration-300`}
-                          >
-                            {selectedApp.title}
-                          </h3>
-                          <p
-                            className={`mb-6 ${
-                              isDarkMode ? "text-gray-300" : "text-gray-600"
-                            } transition-colors duration-300`}
-                          >
-                            {selectedApp.description}
-                          </p>
-                          <button
-                            onClick={handlePlayDemo}
-                            className={`flex items-center justify-center gap-2 ${
-                              isDarkMode
-                                ? "bg-rainbow-green hover:bg-rainbow-blue"
-                                : "bg-blue-600 hover:bg-blue-700"
-                            } text-white px-6 py-3 rounded-lg transition-colors mx-auto`}
-                          >
-                            <FaPlay className='text-sm' />
-                            <span>Launch Live Demo</span>
-                          </button>
+                    <div
+                      className={`h-full flex flex-col items-center justify-center p-4 ${
+                        isDarkMode
+                          ? "bg-gray-800"
+                          : "bg-gradient-to-br from-blue-50 to-purple-50"
+                      } transition-colors duration-300`}
+                    >
+                      <div className='text-center'>
+                        <div className='flex justify-center mb-4'>
+                          <FaMobileAlt
+                            className={`w-12 h-12 ${
+                              isDarkMode ? "text-blue-400" : "text-blue-600"
+                            }`}
+                          />
                         </div>
+                        <h3
+                          className={`text-xl font-bold ${
+                            isDarkMode ? "text-white" : "text-gray-800"
+                          } transition-colors duration-300`}
+                        >
+                          {selectedApp.title}
+                        </h3>
+                        <p
+                          className={`mb-6 ${
+                            isDarkMode ? "text-gray-300" : "text-gray-600"
+                          } transition-colors duration-300`}
+                        >
+                          {selectedApp.description}
+                        </p>
+                        <button
+                          onClick={handlePlayDemo}
+                          disabled={isLoading}
+                          className={`flex items-center justify-center gap-2 ${
+                            isLoading
+                              ? "bg-gray-400 cursor-not-allowed"
+                              : isDarkMode
+                              ? "bg-rainbow-green hover:bg-rainbow-blue"
+                              : "bg-blue-600 hover:bg-blue-700"
+                          } text-white px-6 py-3 rounded-lg transition-colors mx-auto`}
+                        >
+                          {isLoading ? (
+                            <>
+                              <div className='animate-spin rounded-full h-4 w-4 border-b-2 border-white'></div>
+                              <span>Opening...</span>
+                            </>
+                          ) : (
+                            <>
+                              <FaPlay className='text-sm' />
+                              <span>Launch Live Demo</span>
+                            </>
+                          )}
+                        </button>
+                        <p
+                          className={`text-sm mt-4 ${
+                            isDarkMode ? "text-gray-400" : "text-gray-500"
+                          }`}
+                        >
+                          The demo will open in a new tab
+                        </p>
                       </div>
-                    )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -368,7 +427,7 @@ const Projects = () => {
                       </svg>
                     </a>
                     <a
-                      href={selectedApp.demoLink}
+                      href={generateAppetizeUrl(selectedApp)}
                       target='_blank'
                       rel='noopener noreferrer'
                       className={`${
@@ -465,7 +524,8 @@ const Projects = () => {
             >
               These are native mobile applications I've developed using React
               Native. Each app is available on both iOS and Android platforms.
-              Click on any app to view details and launch a live demo.
+              Click on any app to view details and launch a live demo powered by
+              Appetize.io.
             </p>
 
             <div className='space-y-6'>
@@ -474,7 +534,6 @@ const Projects = () => {
                   key={app.id}
                   onClick={() => {
                     setSelectedApp(app);
-                    setIsDemoPlaying(false);
                   }}
                   className={`p-4 rounded-xl cursor-pointer transition-all ${
                     selectedApp.id === app.id
@@ -562,10 +621,18 @@ const Projects = () => {
                   isDarkMode ? "text-blue-200" : "text-blue-700"
                 } transition-colors duration-300`}
               >
-                The live demos are powered by React Native Web, allowing you to
-                experience the app directly in your browser. For the full native
-                experience with all features, download the app from the app
-                stores.
+                The live demos are powered by Appetize.io, allowing you to
+                experience the native mobile app directly in your browser. For
+                the full native experience with all features, download the app
+                from the app stores.
+              </p>
+              <p
+                className={`text-xs mt-2 ${
+                  isDarkMode ? "text-blue-200" : "text-blue-700"
+                }`}
+              >
+                Note: Appetize.io provides a free tier with 30 minutes of
+                streaming time per month. Demos will open in a new tab.
               </p>
             </div>
           </div>
